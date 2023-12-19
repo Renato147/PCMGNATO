@@ -84,7 +84,7 @@ components.html(source_code,height = 600)
 # Supondo que 'df' seja o seu DataFrame original
 # Criando um novo DataFrame sem a quarta coluna
 novo_df = df.drop(df.columns[3], axis=1)
-print(novo_df["Parlamentar"].value_counts())
+
 novo_df['Parlamentar'] = novo_df['Parlamentar'].replace('        DELEGADA SHEILA', 'DELEGADA SHEILA', regex=True)
 novo_df['Parlamentar'] = novo_df['Parlamentar'].replace('\tDELEGADA SHEILA', 'DELEGADA SHEILA', regex=True)
 #novo_df['Parlamentar'] = novo_df['Parlamentar'].replace('  DELEGADA SHEILA', 'Del. SHEILA')
