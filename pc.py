@@ -10,7 +10,7 @@ merged_df = pd.DataFrame()
 img = Image.open('minas.png')
 new_width = int(img.width * 0.1)
 new_height = int(img.height * 0.1)
-img_resized = img.resize((new_width, new_height), Image.ANTIALIAS)
+img_resized = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
 # Calcular as novas dimensões (10% do tamanho original)
 
 st.image(img_resized, caption='')
