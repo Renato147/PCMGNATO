@@ -279,11 +279,6 @@ elif paginaSelecionada == 'Valor Empenhado':
         
         
         m2 = folium.Map(location=[df_parlamentar['latitude'].mean(), df_parlamentar['longitude'].mean()], zoom_start=7)
-        # Criar uma caixa de seleção com os valores únicos
-        
-
-        # Agora você pode usar a variável parlamentar_selecionado para outras operações
-        # Por exemplo, mostrar dados filtrados por esse parlamentar
         # Crie a sobreposição de municípios preenchidos com base na coluna de proporção logarítmica
         folium.Choropleth(
             geo_data=gdfj,
@@ -300,26 +295,42 @@ elif paginaSelecionada == 'Valor Empenhado':
         # Adicione um checkbox para controlar a exibição dos marcadores
         
         # Substitua as coordenadas e o nível de zoom conforme necessário
-
-        # Adicionar marcadores de círculo
+        def first_not_null(series):
+            return series.dropna().iloc[0] if not series.dropna().empty else None
         for index, row in df_parlamentar.iterrows():  # Corrija o erro de sintaxe na linha do loop
+            folium.CircleMarker(
+                location=[row['latitude'], row['longitude']],
+                radius=10,  # Ajuste o tamanho do marcador conforme necessário
+                popup = (
+                            f'Parlamentar: {row["Parlamentar"]}, '
+                            f'Valor Previsto: R${round(row["Valor Total EMPENHADO"], 2)}, '
+                            f'Categoria: {row["Categoria (Padronizado)"]}, '
+                            f'Unidade Beneficiária: {row["Unidade Beneficiária (Padronizado)"]}'
+                        ),
+    # Exibe o valor da probabilidade no pop-up
+                color='blue',
+                fill=True,
+                fill_color='blue'
+            ).add_to(m2)
+# Adicionar controle de camadas (para alternar entre as camadas)
+        folium.LayerControl().add_to(m2)
+        # Adicionar marcadores de círculo
+        agregacao = {"Valor Total EMPENHADO": "sum","latitude": first_not_null, "longitude": first_not_null}
+        soma_por_parlamentar = df_parlamentar.groupby("Parlamentar").agg(agregacao).reset_index()
+        for index, row in soma_por_parlamentar.iterrows():  # Corrija o erro de sintaxe na linha do loop
                 folium.CircleMarker(
                     location=[row['latitude'], row['longitude']],
                     radius=10,  # Ajuste o tamanho do marcador conforme necessário
                     popup = (
                                 f'Parlamentar: {row["Parlamentar"]}, '
                                 f'Valor Total Empenhado: R${round(row["Valor Total EMPENHADO"], 2)}, '
-                                f'Categoria: {row["Categoria (Padronizado)"]}, '
-                                f'Unidade Beneficiária: {row["Unidade Beneficiária (Padronizado)"]}'
+
                             ),
     # Exibe o valor da probabilidade no pop-up
-                    color='blue',
+                    color='red',
                     fill=True,
-                    fill_color='blue'
+                    fill_color='red'
                 ).add_to(m2)
-        # Adicionar controle de camadas (para alternar entre as camadas)
-        folium.LayerControl().add_to(m2)
-   
 
         # Salve o mapa em um arquivo HTML no diretório do projeto
         m2.save('mapa_de_calor_interativo2p.html')
