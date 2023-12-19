@@ -11,6 +11,7 @@ img = Image.open('minas.png')
 new_width = int(img.width * 0.1)
 new_height = int(img.height * 0.1)
 img_resized = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
+st.image(img_resized, caption='')
 st.title('Visão Regional dos Investimentos Parlamentares em Minas Gerais ')
 
 # Calcular as novas dimensões (10% do tamanho original)
