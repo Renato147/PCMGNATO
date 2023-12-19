@@ -16,7 +16,7 @@ st.title('Visão Regional dos Investimentos Parlamentares em Minas Gerais ')
 
 # Calcular as novas dimensões (10% do tamanho original)
 st.sidebar.title('Soluções Digitais ')
-paginaSelecionada = st.sidebar.selectbox('Escolha uma opção', ['Valor Liquidado','Valor Previsto','Valor Empenhado'])
+paginaSelecionada = st.sidebar.selectbox('Escolha uma opção', ['Valor Liquidado','Valor Previsto','Valor Empenhado','Município/Empenhado','Categoria/Empenhado','Município/Previsto','Categoria/Previsto'])
 
 
 if paginaSelecionada == 'Valor Liquidado':
@@ -273,12 +273,19 @@ elif paginaSelecionada == 'Valor Empenhado':
     parlamentares_unicos = novo_df['Parlamentar'].unique()
     parlamentares_unicos_ordenados = sorted(parlamentares_unicos)
     show_markers2 = st.checkbox('Exibir mapa por Atuação de Parlamentar', key='show_markers2')
+    
     if show_markers2:
+        show_markers24 = st.checkbox('Exibir mapa por Atuação de Parlamentar/Valor Total Empregado', key='show_markers24')
         parlamentar_selecionado = st.selectbox('Selecione um Parlamentar', parlamentares_unicos_ordenados)
         df_parlamentar=novo_df[novo_df['Parlamentar'] == parlamentar_selecionado]
         
         
         m2 = folium.Map(location=[df_parlamentar['latitude'].mean(), df_parlamentar['longitude'].mean()], zoom_start=7)
+        # Criar uma caixa de seleção com os valores únicos
+        
+
+        # Agora você pode usar a variável parlamentar_selecionado para outras operações
+        # Por exemplo, mostrar dados filtrados por esse parlamentar
         # Crie a sobreposição de municípios preenchidos com base na coluna de proporção logarítmica
         folium.Choropleth(
             geo_data=gdfj,
@@ -314,23 +321,27 @@ elif paginaSelecionada == 'Valor Empenhado':
             ).add_to(m2)
 # Adicionar controle de camadas (para alternar entre as camadas)
         folium.LayerControl().add_to(m2)
-        # Adicionar marcadores de círculo
-        agregacao = {"Valor Total EMPENHADO": "sum","latitude": first_not_null, "longitude": first_not_null}
-        soma_por_parlamentar = df_parlamentar.groupby("Parlamentar").agg(agregacao).reset_index()
-        for index, row in soma_por_parlamentar.iterrows():  # Corrija o erro de sintaxe na linha do loop
-                folium.CircleMarker(
-                    location=[row['latitude'], row['longitude']],
-                    radius=10,  # Ajuste o tamanho do marcador conforme necessário
-                    popup = (
-                                f'Parlamentar: {row["Parlamentar"]}, '
-                                f'Valor Total Empenhado: R${round(row["Valor Total EMPENHADO"], 2)}, '
+        if show_markers24:
+            # Adicionar marcadores de círculo
+            agregacao = {"Valor Total EMPENHADO": "sum","latitude": first_not_null, "longitude": first_not_null}
+            soma_por_parlamentar = df_parlamentar.groupby("Parlamentar").agg(agregacao).reset_index()
+            for index, row in soma_por_parlamentar.iterrows():  # Corrija o erro de sintaxe na linha do loop
+                    folium.CircleMarker(
+                        location=[row['latitude'], row['longitude']],
+                        radius=10,  # Ajuste o tamanho do marcador conforme necessário
+                        popup = (
+                                    f'Parlamentar: {row["Parlamentar"]}, '
+                                    f'Valor Total Empenhado: R${round(row["Valor Total EMPENHADO"], 2)}, '
 
-                            ),
-    # Exibe o valor da probabilidade no pop-up
-                    color='red',
-                    fill=True,
-                    fill_color='red'
-                ).add_to(m2)
+                                ),
+        # Exibe o valor da probabilidade no pop-up
+                        color='red',
+                        fill=True,
+                        fill_color='red'
+                    ).add_to(m2)
+         
+
+   
 
         # Salve o mapa em um arquivo HTML no diretório do projeto
         m2.save('mapa_de_calor_interativo2p.html')
@@ -447,8 +458,9 @@ elif paginaSelecionada == 'Valor Previsto':
 
     parlamentares_unicos = novo_df['Parlamentar'].unique()
     parlamentares_unicos_ordenados = sorted(parlamentares_unicos)
-    show_markers2 = st.checkbox('Exibir mapa por Atuação de Parlamentar', key='show_markers2')
-    if show_markers2:
+    show_markers23 = st.checkbox('Exibir mapa por Atuação de Parlamentar', key='show_markers23')
+    if show_markers23:
+        show_markers245 = st.checkbox('Exibir mapa por Atuação de Parlamentar/Valor Total Previsto', key='show_markers245')
         parlamentar_selecionado = st.selectbox('Selecione um Parlamentar', parlamentares_unicos_ordenados)
         df_parlamentar=novo_df[novo_df['Parlamentar'] == parlamentar_selecionado]
         
@@ -475,32 +487,52 @@ elif paginaSelecionada == 'Valor Previsto':
         # Adicione um checkbox para controlar a exibição dos marcadores
         
         # Substitua as coordenadas e o nível de zoom conforme necessário
-
-        # Adicionar marcadores de círculo
+        def first_not_null(series):
+            return series.dropna().iloc[0] if not series.dropna().empty else None
         for index, row in df_parlamentar.iterrows():  # Corrija o erro de sintaxe na linha do loop
-                folium.CircleMarker(
-                    location=[row['latitude'], row['longitude']],
-                    radius=10,  # Ajuste o tamanho do marcador conforme necessário
-                    popup = (
-                                f'Parlamentar: {row["Parlamentar"]}, '
-                                f'Valor Previsto: R${round(row["Valor total PREVISTO"], 2)}, '
-                                f'Categoria: {row["Categoria (Padronizado)"]}, '
-                                f'Unidade Beneficiária: {row["Unidade Beneficiária (Padronizado)"]}'
-                            ),
+            folium.CircleMarker(
+                location=[row['latitude'], row['longitude']],
+                radius=10,  # Ajuste o tamanho do marcador conforme necessário
+                popup = (
+                            f'Parlamentar: {row["Parlamentar"]}, '
+                            f'Valor Previsto: R${round(row["Valor total PREVISTO"], 2)}, '
+                            f'Categoria: {row["Categoria (Padronizado)"]}, '
+                            f'Unidade Beneficiária: {row["Unidade Beneficiária (Padronizado)"]}'
+                        ),
     # Exibe o valor da probabilidade no pop-up
-                    color='blue',
-                    fill=True,
-                    fill_color='blue'
-                ).add_to(m2)
-        # Adicionar controle de camadas (para alternar entre as camadas)
+                color='blue',
+                fill=True,
+                fill_color='blue'
+            ).add_to(m2)
+# Adicionar controle de camadas (para alternar entre as camadas)
         folium.LayerControl().add_to(m2)
+        if show_markers245:
+            # Adicionar marcadores de círculo
+            agregacao = {"Valor total PREVISTO": "sum","latitude": first_not_null, "longitude": first_not_null}
+            soma_por_parlamentar = df_parlamentar.groupby("Parlamentar").agg(agregacao).reset_index()
+            for index, row in soma_por_parlamentar.iterrows():  # Corrija o erro de sintaxe na linha do loop
+                    folium.CircleMarker(
+                        location=[row['latitude'], row['longitude']],
+                        radius=10,  # Ajuste o tamanho do marcador conforme necessário
+                        popup = (
+                                    f'Parlamentar: {row["Parlamentar"]}, '
+                                    f'Valor Total Empenhado: R${round(row["Valor total PREVISTO"], 2)}, '
+
+                                ),
+        # Exibe o valor da probabilidade no pop-up
+                        color='red',
+                        fill=True,
+                        fill_color='red'
+                    ).add_to(m2)
+         
+
    
 
         # Salve o mapa em um arquivo HTML no diretório do projeto
-        m2.save('mapa_de_calor_interativo2pt.html')
-        HtmlFile = open("mapa_de_calor_interativo2pt.html", 'r', encoding='utf-8')
+        m2.save('mapa_de_calor_interativo2pj.html')
+        HtmlFile = open("mapa_de_calor_interativo2pj.html", 'r', encoding='utf-8')
         source_code = HtmlFile.read() 
-        st.subheader(f'Mapa de Valor Previsto / Parlamentar {parlamentar_selecionado }')
+        st.subheader(f'Mapa de Valor Empenhado / Parlamentar {parlamentar_selecionado }')
         #components.html(source_code,height = 600)
         components.html(source_code,height = 600)
         novos_dados = df_parlamentar.iloc[:, [4, 2, 6, 8, 9, 10]]
@@ -510,3 +542,403 @@ elif paginaSelecionada == 'Valor Previsto':
             
     else:
         st.write('Os marcadores estão desativados. Marque a caixa para mostrá-los no mapa.')
+    
+elif paginaSelecionada == 'Município/Empenhado':
+    
+    caminho_do_arquivo = 'PCMG235.csv'
+    df2 = pd.read_excel("nato4.xlsx")
+    #f2= df2.groupby(['Município Beneficiado (Padronizado)', 'Parlamentar','Unidade Beneficiária (Padronizado)','Ação Orçamentária','Categoria (Padronizado)']).agg({
+        #'Valor Total LIQUIDADO': 'sum',
+        #'Código SIAD': 'first'
+    #}).reset_index()
+    df2 = df2[df2["Município Beneficiado (Padronizado)"] != ""]
+    df2 ['Valor Total EMPENHADO'] = pd.to_numeric(df2 ['Valor Total EMPENHADO'], errors='coerce')  # 'coerce' para converter não numéricos em NaN
+    df2  = df2 .dropna(subset=['Valor Total EMPENHADO'])
+
+    filtros = []
+
+    # Suponha que o usuário tenha feito escolhas anteriores e armazenado em 'parlamentares_selecionados'
+    # Adicione um filtro para o nome do parlamentar, se 'parlamentares_selecionados' não estiver vazio
+   
+
+    df_municipios = pd.read_csv('municipios.csv')
+    df_merged = pd.merge(df2 , df_municipios, left_on='Município Beneficiado (Padronizado)', right_on='nome', how='inner')
+    geojson_path = 'municipios.geojson.json'
+    gdf = gpd.read_file(geojson_path)
+    gdf["id"] = gdf["id"].astype(int)
+    gdfj = gdf.merge(df_merged, left_on='id', right_on='codigo_ibge', how='inner')
+    filtros = []
+    parlamentares_unicos =gdfj['name'].unique()
+    parlamentares_unicos_ordenados = sorted(parlamentares_unicos)   
+    parlamentares_selecionados = st.multiselect('Selecione Município', parlamentares_unicos_ordenados)
+    # Suponha que o usuário tenha feito escolhas anteriores e armazenado em 'parlamentares_selecionados'
+    # Adicione um filtro para o nome do parlamentar, se 'parlamentares_selecionados' não estiver vazio
+    if parlamentares_selecionados:
+        filtro_nome = gdfj["name"].isin(parlamentares_selecionados)
+        filtros.append(filtro_nome)
+
+    # Combine todos os filtros usando o operador lógico "E" (AND)
+    filtro_completo = pd.Series([True] * len(gdfj))
+    for filtro in filtros:
+        filtro_completo = filtro_completo & filtro
+
+    # Aplique o filtro ao DataFrame original
+    df_filtrado = gdfj[filtro_completo]
+
+    # Combine todos os filtros usando o operador lógico "E" (AND)
+
+    # Carregar a imagem
+
+    df = pd.read_csv(caminho_do_arquivo,sep=",")
+    #st.table(df.head(10))
+    #df2 = pd.read_csv(caminho_do_arquivo2,sep=",")
+    #df2['Parlamentar'] = df2['Parlamentar'].replace('        DELEGADA SHEILA', 'DELEGADA SHEILA', regex=True)
+    #df2['Parlamentar'] = df2['Parlamentar'].replace("\tDELEGADA SHEILA", 'DELEGADA SHEILA', regex=True)
+
+    # Crie um mapa Folium
+    m3 = folium.Map(
+        location=[-19.235, -51.925],  # Coordenadas aproximadas do Brasil
+        zoom_start=6,
+        tiles='cartodb positron'  # Estilo do mapa
+    )
+   
+    # Suponha que você tenha um arquivo GeoJSON chamado "municipios.geojson"
+    # Substitua esta linha pelo caminho correto do seu arquivo GeoJSON ou pela fonte de dados geográficos
+
+
+    # Faça o merge entre os DataFrames
+    #gdf = gdf.merge(df_merged, left_on='id', right_on='codigo_ibge', how='inner')
+
+    # Aplique o logaritmo à coluna de proporção
+    #gdfj ['log_proporcao_vitimas'] = np.log1p(gdfj['qtde_vitimas_x'])  # Use log1p para evitar problemas com valores zero
+
+    # Crie a sobreposição de municípios preenchidos com base na coluna de proporção logarítmica
+    folium.Choropleth(
+        geo_data= df_filtrado,
+        name='choropleth',
+        data= df_filtrado,
+        columns=['codigo_ibge', 'Valor Total EMPENHADO'],  # Use a coluna logarítmica aqui
+        key_on='feature.properties.codigo_ibge',
+        fill_color='YlOrRd',  # Esquema de cores (YlOrRd é um exemplo)
+        fill_opacity=0.7,
+        line_opacity=0.2,
+        legend_name='Valor Total EMPENHADO'
+    ).add_to(m3)
+
+    # Adicione um controle de camadas (layers control) ao mapa
+    folium.LayerControl().add_to(m3)
+    # Salve o mapa em um arquivo HTML no diretório do projeto
+    m3.save('mapa_de_calor_interativo2p.html')
+    HtmlFile = open("mapa_de_calor_interativo2p.html", 'r', encoding='utf-8')
+    source_code = HtmlFile.read() 
+    st.subheader(f'Mapa de Valor Empenhado')
+    #components.html(source_code,height = 600)
+    components.html(source_code,height = 600)
+    novos_dados = df_filtrado.iloc[:, [4, 2, 6, 8, 9, 10]]
+    st.table(novos_dados)
+    
+    
+    
+elif paginaSelecionada == 'Categoria/Empenhado':
+    
+    caminho_do_arquivo = 'PCMG235.csv'
+    df2 = pd.read_excel("nato4.xlsx")
+    #f2= df2.groupby(['Município Beneficiado (Padronizado)', 'Parlamentar','Unidade Beneficiária (Padronizado)','Ação Orçamentária','Categoria (Padronizado)']).agg({
+        #'Valor Total LIQUIDADO': 'sum',
+        #'Código SIAD': 'first'
+    #}).reset_index()
+    df2 = df2[df2["Município Beneficiado (Padronizado)"] != ""]
+    df2 ['Valor Total EMPENHADO'] = pd.to_numeric(df2 ['Valor Total EMPENHADO'], errors='coerce')  # 'coerce' para converter não numéricos em NaN
+    df2  = df2 .dropna(subset=['Valor Total EMPENHADO'])
+
+    filtros = []
+
+    # Suponha que o usuário tenha feito escolhas anteriores e armazenado em 'parlamentares_selecionados'
+    # Adicione um filtro para o nome do parlamentar, se 'parlamentares_selecionados' não estiver vazio
+   
+
+    df_municipios = pd.read_csv('municipios.csv')
+    df_merged = pd.merge(df2 , df_municipios, left_on='Município Beneficiado (Padronizado)', right_on='nome', how='inner')
+    geojson_path = 'municipios.geojson.json'
+    gdf = gpd.read_file(geojson_path)
+    gdf["id"] = gdf["id"].astype(int)
+    gdfj = gdf.merge(df_merged, left_on='id', right_on='codigo_ibge', how='inner')
+    filtros = []
+    # Obtenha os valores únicos da coluna "Categoria (Padronizado)"
+    parlamentares_unicos = gdfj['Categoria (Padronizado)'].unique()
+
+    # Converta todos os valores para strings
+    parlamentares_unicos = [str(value) for value in parlamentares_unicos]
+
+    # Ordene a lista em ordem alfabética
+    parlamentares_unicos_ordenados = sorted(parlamentares_unicos)
+
+    # Use o widget multiselect para permitir seleções múltiplas
+    parlamentares_selecionados = st.multiselect('Selecione uma categoria', parlamentares_unicos_ordenados)
+    st.write('Categorias selecionadas:')
+    for categoria in parlamentares_selecionados:
+        st.write(categoria)
+    # Adicione um filtro para o nome do parlamentar, se 'parlamentares_selecionados' não estiver vazio
+    if parlamentares_selecionados:
+        filtro_nome = gdfj["Categoria (Padronizado)"].isin(parlamentares_selecionados)
+        filtros.append(filtro_nome)
+
+    # Combine todos os filtros usando o operador lógico "E" (AND)
+    filtro_completo = pd.Series([True] * len(gdfj))
+    for filtro in filtros:
+        filtro_completo = filtro_completo & filtro
+
+    # Aplique o filtro ao DataFrame original
+    df_filtrado = gdfj[filtro_completo]
+
+    # Combine todos os filtros usando o operador lógico "E" (AND)
+
+    # Carregar a imagem
+
+    df = pd.read_csv(caminho_do_arquivo,sep=",")
+    #st.table(df.head(10))
+    #df2 = pd.read_csv(caminho_do_arquivo2,sep=",")
+    #df2['Parlamentar'] = df2['Parlamentar'].replace('        DELEGADA SHEILA', 'DELEGADA SHEILA', regex=True)
+    #df2['Parlamentar'] = df2['Parlamentar'].replace("\tDELEGADA SHEILA", 'DELEGADA SHEILA', regex=True)
+
+    # Crie um mapa Folium
+    m3 = folium.Map(
+        location=[-19.235, -51.925],  # Coordenadas aproximadas do Brasil
+        zoom_start=6,
+        tiles='cartodb positron'  # Estilo do mapa
+    )
+   
+    # Suponha que você tenha um arquivo GeoJSON chamado "municipios.geojson"
+    # Substitua esta linha pelo caminho correto do seu arquivo GeoJSON ou pela fonte de dados geográficos
+
+
+    # Faça o merge entre os DataFrames
+    #gdf = gdf.merge(df_merged, left_on='id', right_on='codigo_ibge', how='inner')
+
+    # Aplique o logaritmo à coluna de proporção
+    #gdfj ['log_proporcao_vitimas'] = np.log1p(gdfj['qtde_vitimas_x'])  # Use log1p para evitar problemas com valores zero
+
+    # Crie a sobreposição de municípios preenchidos com base na coluna de proporção logarítmica
+    folium.Choropleth(
+        geo_data= df_filtrado,
+        name='choropleth',
+        data= df_filtrado,
+        columns=['codigo_ibge', 'Valor Total EMPENHADO'],  # Use a coluna logarítmica aqui
+        key_on='feature.properties.codigo_ibge',
+        fill_color='YlOrRd',  # Esquema de cores (YlOrRd é um exemplo)
+        fill_opacity=0.7,
+        line_opacity=0.2,
+        legend_name='Valor Total EMPENHADO'
+    ).add_to(m3)
+
+    # Adicione um controle de camadas (layers control) ao mapa
+    folium.LayerControl().add_to(m3)
+    # Salve o mapa em um arquivo HTML no diretório do projeto
+    m3.save('mapa_de_calor_interativo2pa.html')
+    HtmlFile = open("mapa_de_calor_interativo2pa.html", 'r', encoding='utf-8')
+    source_code = HtmlFile.read() 
+    st.subheader(f'Mapa de Valor Empenhado /Categoria')
+    #components.html(source_code,height = 600)
+    components.html(source_code,height = 600)
+    novos_dados = df_filtrado.iloc[:, [4, 2, 6, 8, 9, 10]]
+    st.table(novos_dados)
+    
+elif paginaSelecionada == 'Município/Previsto':
+    
+    caminho_do_arquivo = 'PCMG235.csv'
+    df2 = pd.read_excel("nato4.xlsx")
+    #f2= df2.groupby(['Município Beneficiado (Padronizado)', 'Parlamentar','Unidade Beneficiária (Padronizado)','Ação Orçamentária','Categoria (Padronizado)']).agg({
+        #'Valor Total LIQUIDADO': 'sum',
+        #'Código SIAD': 'first'
+    #}).reset_index()
+    df2 = df2[df2["Município Beneficiado (Padronizado)"] != ""]
+    df2 ['Valor total PREVISTO'] = pd.to_numeric(df2 ['Valor total PREVISTO'], errors='coerce')  # 'coerce' para converter não numéricos em NaN
+    df2  = df2 .dropna(subset=['Valor total PREVISTO'])
+
+    filtros = []
+
+    # Suponha que o usuário tenha feito escolhas anteriores e armazenado em 'parlamentares_selecionados'
+    # Adicione um filtro para o nome do parlamentar, se 'parlamentares_selecionados' não estiver vazio
+   
+
+    df_municipios = pd.read_csv('municipios.csv')
+    df_merged = pd.merge(df2 , df_municipios, left_on='Município Beneficiado (Padronizado)', right_on='nome', how='inner')
+    geojson_path = 'municipios.geojson.json'
+    gdf = gpd.read_file(geojson_path)
+    gdf["id"] = gdf["id"].astype(int)
+    gdfj = gdf.merge(df_merged, left_on='id', right_on='codigo_ibge', how='inner')
+    filtros = []
+    parlamentares_unicos =gdfj['name'].unique()
+    parlamentares_unicos_ordenados = sorted(parlamentares_unicos)   
+    parlamentares_selecionados = st.multiselect('Selecione Município', parlamentares_unicos_ordenados)
+    # Suponha que o usuário tenha feito escolhas anteriores e armazenado em 'parlamentares_selecionados'
+    # Adicione um filtro para o nome do parlamentar, se 'parlamentares_selecionados' não estiver vazio
+    if parlamentares_selecionados:
+        filtro_nome = gdfj["name"].isin(parlamentares_selecionados)
+        filtros.append(filtro_nome)
+
+    # Combine todos os filtros usando o operador lógico "E" (AND)
+    filtro_completo = pd.Series([True] * len(gdfj))
+    for filtro in filtros:
+        filtro_completo = filtro_completo & filtro
+
+    # Aplique o filtro ao DataFrame original
+    df_filtrado = gdfj[filtro_completo]
+
+    # Combine todos os filtros usando o operador lógico "E" (AND)
+
+    # Carregar a imagem
+
+    df = pd.read_csv(caminho_do_arquivo,sep=",")
+    #st.table(df.head(10))
+    #df2 = pd.read_csv(caminho_do_arquivo2,sep=",")
+    #df2['Parlamentar'] = df2['Parlamentar'].replace('        DELEGADA SHEILA', 'DELEGADA SHEILA', regex=True)
+    #df2['Parlamentar'] = df2['Parlamentar'].replace("\tDELEGADA SHEILA", 'DELEGADA SHEILA', regex=True)
+
+    # Crie um mapa Folium
+    m3 = folium.Map(
+        location=[-19.235, -51.925],  # Coordenadas aproximadas do Brasil
+        zoom_start=6,
+        tiles='cartodb positron'  # Estilo do mapa
+    )
+   
+    # Suponha que você tenha um arquivo GeoJSON chamado "municipios.geojson"
+    # Substitua esta linha pelo caminho correto do seu arquivo GeoJSON ou pela fonte de dados geográficos
+
+
+    # Faça o merge entre os DataFrames
+    #gdf = gdf.merge(df_merged, left_on='id', right_on='codigo_ibge', how='inner')
+
+    # Aplique o logaritmo à coluna de proporção
+    #gdfj ['log_proporcao_vitimas'] = np.log1p(gdfj['qtde_vitimas_x'])  # Use log1p para evitar problemas com valores zero
+
+    # Crie a sobreposição de municípios preenchidos com base na coluna de proporção logarítmica
+    folium.Choropleth(
+        geo_data= df_filtrado,
+        name='choropleth',
+        data= df_filtrado,
+        columns=['codigo_ibge', 'Valor total PREVISTO'],  # Use a coluna logarítmica aqui
+        key_on='feature.properties.codigo_ibge',
+        fill_color='YlOrRd',  # Esquema de cores (YlOrRd é um exemplo)
+        fill_opacity=0.7,
+        line_opacity=0.2,
+        legend_name='Valor total PREVISTO'
+    ).add_to(m3)
+
+    # Adicione um controle de camadas (layers control) ao mapa
+    folium.LayerControl().add_to(m3)
+    # Salve o mapa em um arquivo HTML no diretório do projeto
+    m3.save('mapa_de_calor_interativo2pxx.html')
+    HtmlFile = open("mapa_de_calor_interativo2pxx.html", 'r', encoding='utf-8')
+    source_code = HtmlFile.read() 
+    st.subheader(f'Mapa de Valor Previsto')
+    #components.html(source_code,height = 600)
+    components.html(source_code,height = 600)
+    novos_dados = df_filtrado.iloc[:, [4, 2, 6, 8, 9, 10]]
+    st.table(novos_dados)
+    
+    
+    
+elif paginaSelecionada == 'Categoria/Previsto':
+    
+    caminho_do_arquivo = 'PCMG235.csv'
+    df2 = pd.read_excel("nato4.xlsx")
+    #f2= df2.groupby(['Município Beneficiado (Padronizado)', 'Parlamentar','Unidade Beneficiária (Padronizado)','Ação Orçamentária','Categoria (Padronizado)']).agg({
+        #'Valor Total LIQUIDADO': 'sum',
+        #'Código SIAD': 'first'
+    #}).reset_index()
+    df2 = df2[df2["Município Beneficiado (Padronizado)"] != ""]
+    df2 ['Valor total PREVISTO'] = pd.to_numeric(df2 ['Valor total PREVISTO'], errors='coerce')  # 'coerce' para converter não numéricos em NaN
+    df2  = df2 .dropna(subset=['Valor total PREVISTO'])
+
+    filtros = []
+
+    # Suponha que o usuário tenha feito escolhas anteriores e armazenado em 'parlamentares_selecionados'
+    # Adicione um filtro para o nome do parlamentar, se 'parlamentares_selecionados' não estiver vazio
+   
+
+    df_municipios = pd.read_csv('municipios.csv')
+    df_merged = pd.merge(df2 , df_municipios, left_on='Município Beneficiado (Padronizado)', right_on='nome', how='inner')
+    geojson_path = 'municipios.geojson.json'
+    gdf = gpd.read_file(geojson_path)
+    gdf["id"] = gdf["id"].astype(int)
+    gdfj = gdf.merge(df_merged, left_on='id', right_on='codigo_ibge', how='inner')
+    filtros = []
+    # Obtenha os valores únicos da coluna "Categoria (Padronizado)"
+    parlamentares_unicos = gdfj['Categoria (Padronizado)'].unique()
+
+    # Converta todos os valores para strings
+    parlamentares_unicos = [str(value) for value in parlamentares_unicos]
+
+    # Ordene a lista em ordem alfabética
+    parlamentares_unicos_ordenados = sorted(parlamentares_unicos)
+
+    # Use o widget multiselect para permitir seleções múltiplas
+    parlamentares_selecionados = st.multiselect('Selecione uma categoria', parlamentares_unicos_ordenados)
+    st.write('Categorias selecionadas:')
+    for categoria in parlamentares_selecionados:
+        st.write(categoria)
+    # Adicione um filtro para o nome do parlamentar, se 'parlamentares_selecionados' não estiver vazio
+    if parlamentares_selecionados:
+        filtro_nome = gdfj["Categoria (Padronizado)"].isin(parlamentares_selecionados)
+        filtros.append(filtro_nome)
+
+    # Combine todos os filtros usando o operador lógico "E" (AND)
+    filtro_completo = pd.Series([True] * len(gdfj))
+    for filtro in filtros:
+        filtro_completo = filtro_completo & filtro
+
+    # Aplique o filtro ao DataFrame original
+    df_filtrado = gdfj[filtro_completo]
+
+    # Combine todos os filtros usando o operador lógico "E" (AND)
+
+    # Carregar a imagem
+
+    df = pd.read_csv(caminho_do_arquivo,sep=",")
+    #st.table(df.head(10))
+    #df2 = pd.read_csv(caminho_do_arquivo2,sep=",")
+    #df2['Parlamentar'] = df2['Parlamentar'].replace('        DELEGADA SHEILA', 'DELEGADA SHEILA', regex=True)
+    #df2['Parlamentar'] = df2['Parlamentar'].replace("\tDELEGADA SHEILA", 'DELEGADA SHEILA', regex=True)
+
+    # Crie um mapa Folium
+    m3 = folium.Map(
+        location=[-19.235, -51.925],  # Coordenadas aproximadas do Brasil
+        zoom_start=6,
+        tiles='cartodb positron'  # Estilo do mapa
+    )
+   
+    # Suponha que você tenha um arquivo GeoJSON chamado "municipios.geojson"
+    # Substitua esta linha pelo caminho correto do seu arquivo GeoJSON ou pela fonte de dados geográficos
+
+
+    # Faça o merge entre os DataFrames
+    #gdf = gdf.merge(df_merged, left_on='id', right_on='codigo_ibge', how='inner')
+
+    # Aplique o logaritmo à coluna de proporção
+    #gdfj ['log_proporcao_vitimas'] = np.log1p(gdfj['qtde_vitimas_x'])  # Use log1p para evitar problemas com valores zero
+
+    # Crie a sobreposição de municípios preenchidos com base na coluna de proporção logarítmica
+    folium.Choropleth(
+        geo_data= df_filtrado,
+        name='choropleth',
+        data= df_filtrado,
+        columns=['codigo_ibge', 'Valor total PREVISTO'],  # Use a coluna logarítmica aqui
+        key_on='feature.properties.codigo_ibge',
+        fill_color='YlOrRd',  # Esquema de cores (YlOrRd é um exemplo)
+        fill_opacity=0.7,
+        line_opacity=0.2,
+        legend_name='Valor total PREVISTO'
+    ).add_to(m3)
+
+    # Adicione um controle de camadas (layers control) ao mapa
+    folium.LayerControl().add_to(m3)
+    # Salve o mapa em um arquivo HTML no diretório do projeto
+    m3.save('mapa_de_calor_interativo2px.html')
+    HtmlFile = open("mapa_de_calor_interativo2px.html", 'r', encoding='utf-8')
+    source_code = HtmlFile.read() 
+    st.subheader(f'Mapa de Valor Empenhado /Categoria')
+    #components.html(source_code,height = 600)
+    components.html(source_code,height = 600)
+    novos_dados = df_filtrado.iloc[:, [4, 2, 6, 8, 9, 10]]
+    st.table(novos_dados)
