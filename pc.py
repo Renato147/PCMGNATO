@@ -516,7 +516,7 @@ elif paginaSelecionada == 'Valor Previsto':
                         radius=10,  # Ajuste o tamanho do marcador conforme necessário
                         popup = (
                                     f'Parlamentar: {row["Parlamentar"]}, '
-                                    f'Valor Total Empenhado: R${round(row["Valor total PREVISTO"], 2)}, '
+                                    f'Valor Total Previsto: R${round(row["Valor total PREVISTO"], 2)}, '
 
                                 ),
         # Exibe o valor da probabilidade no pop-up
@@ -532,7 +532,7 @@ elif paginaSelecionada == 'Valor Previsto':
         m2.save('mapa_de_calor_interativo2pj.html')
         HtmlFile = open("mapa_de_calor_interativo2pj.html", 'r', encoding='utf-8')
         source_code = HtmlFile.read() 
-        st.subheader(f'Mapa de Valor Empenhado / Parlamentar {parlamentar_selecionado }')
+        st.subheader(f'Mapa de Valor Previsto / Parlamentar {parlamentar_selecionado }')
         #components.html(source_code,height = 600)
         components.html(source_code,height = 600)
         novos_dados = df_parlamentar.iloc[:, [4, 2, 6, 8, 9, 10]]
