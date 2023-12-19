@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_5cf462c87caabcd389e5f9502f42e769 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_5cf462c87caabcd389e5f9502f42e769" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_5cf462c87caabcd389e5f9502f42e769 = L.map(
+                "map_5cf462c87caabcd389e5f9502f42e769",
+                {
+                    center: [-19.131700000000002, -43.28727272727272],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 7,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_2e281331d5b1c04969e69c81410f8c9d = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_5cf462c87caabcd389e5f9502f42e769);
+        
+    
+            var circle_marker_2b709756b22227c2485abe53c7188431 = L.circleMarker(
+                [-19.9102, -43.9266],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(map_5cf462c87caabcd389e5f9502f42e769);
+        
+    
+        var popup_f9827dcd4c46ec6a3ac84ad33d367eb2 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_c96a39133c931c15951fa920036860ad = $(`<div id="html_c96a39133c931c15951fa920036860ad" style="width: 100.0%; height: 100.0%;">Parlamentar:  Guilherme da Cunha, Valor Total Liquidado: R$501200.0, Categoria: Equipamento Fotográfico ou de Filmagem, Unidade Beneficiária: Instituto de Criminalística</div>`)[0];
+            popup_f9827dcd4c46ec6a3ac84ad33d367eb2.setContent(html_c96a39133c931c15951fa920036860ad);
+        
+
+        circle_marker_2b709756b22227c2485abe53c7188431.bindPopup(popup_f9827dcd4c46ec6a3ac84ad33d367eb2)
+        ;
+
+        
+    
+    
+            var circle_marker_777070b8beee5fc867d67c335143b6e3 = L.circleMarker(
+                [-19.9102, -43.9266],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(map_5cf462c87caabcd389e5f9502f42e769);
+        
+    
+        var popup_00a600257552f0e308791f8344ef5918 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_41b32416b15efd62c9495e1abe007528 = $(`<div id="html_41b32416b15efd62c9495e1abe007528" style="width: 100.0%; height: 100.0%;">Parlamentar:  Guilherme da Cunha, Valor Total Liquidado: R$4501472.0, Categoria: Equipamento de Informática, Unidade Beneficiária: Instituto de Criminalística</div>`)[0];
+            popup_00a600257552f0e308791f8344ef5918.setContent(html_41b32416b15efd62c9495e1abe007528);
+        
+
+        circle_marker_777070b8beee5fc867d67c335143b6e3.bindPopup(popup_00a600257552f0e308791f8344ef5918)
+        ;
+
+        
+    
+    
+            var circle_marker_4f70b96be59eabb551e1228dfa606afe = L.circleMarker(
+                [-19.9102, -43.9266],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(map_5cf462c87caabcd389e5f9502f42e769);
+        
+    
+        var popup_074c5b18c6f091321572b8a387f8a4ec = L.popup({"maxWidth": "100%"});
+
+        
+            var html_abb4e27e3a4b95adba06f4e83c73b17d = $(`<div id="html_abb4e27e3a4b95adba06f4e83c73b17d" style="width: 100.0%; height: 100.0%;">Parlamentar:  Guilherme da Cunha, Valor Total Liquidado: R$230708.0, Categoria: Equipamentos, Unidade Beneficiária: Instituto de Criminalística</div>`)[0];
+            popup_074c5b18c6f091321572b8a387f8a4ec.setContent(html_abb4e27e3a4b95adba06f4e83c73b17d);
+        
+
+        circle_marker_4f70b96be59eabb551e1228dfa606afe.bindPopup(popup_074c5b18c6f091321572b8a387f8a4ec)
+        ;
+
+        
+    
+    
+            var circle_marker_a2387614858146fe2007174413763d49 = L.circleMarker(
+                [-19.9102, -43.9266],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(map_5cf462c87caabcd389e5f9502f42e769);
+        
+    
+        var popup_0255b3881aab114490ed54fbca146259 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d4211326e94a521bb820935220df170c = $(`<div id="html_d4211326e94a521bb820935220df170c" style="width: 100.0%; height: 100.0%;">Parlamentar:  Guilherme da Cunha, Valor Total Liquidado: R$20500000.0, Categoria: Software, Unidade Beneficiária: Instituto de Criminalística</div>`)[0];
+            popup_0255b3881aab114490ed54fbca146259.setContent(html_d4211326e94a521bb820935220df170c);
+        
+
+        circle_marker_a2387614858146fe2007174413763d49.bindPopup(popup_0255b3881aab114490ed54fbca146259)
+        ;
+
+        
+    
+    
+            var circle_marker_95eb1ce008a423adaad0c709d13cab02 = L.circleMarker(
+                [-19.4703, -42.5476],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(map_5cf462c87caabcd389e5f9502f42e769);
+        
+    
+        var popup_a2e8aa6958905d5d57d25be395e30cfe = L.popup({"maxWidth": "100%"});
+
+        
+            var html_9d226977ae94d054871750e4a93b70ab = $(`<div id="html_9d226977ae94d054871750e4a93b70ab" style="width: 100.0%; height: 100.0%;">Parlamentar:  Guilherme da Cunha, Valor Total Liquidado: R$501200.0, Categoria: Equipamento Fotográfico ou de Filmagem, Unidade Beneficiária: IML de Ipatinga</div>`)[0];
+            popup_a2e8aa6958905d5d57d25be395e30cfe.setContent(html_9d226977ae94d054871750e4a93b70ab);
+        
+
+        circle_marker_95eb1ce008a423adaad0c709d13cab02.bindPopup(popup_a2e8aa6958905d5d57d25be395e30cfe)
+        ;
+
+        
+    
+    
+            var circle_marker_ea53a99f2a5632ca6621e93b9be87a46 = L.circleMarker(
+                [-19.4703, -42.5476],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(map_5cf462c87caabcd389e5f9502f42e769);
+        
+    
+        var popup_5dc527aa451d3c8c7e69ac83f8d082a2 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_731cc93369ed6227e134258c8be17cbd = $(`<div id="html_731cc93369ed6227e134258c8be17cbd" style="width: 100.0%; height: 100.0%;">Parlamentar:  Guilherme da Cunha, Valor Total Liquidado: R$1267899.0, Categoria: Equipamento de Informática, Unidade Beneficiária: IML de Ipatinga</div>`)[0];
+            popup_5dc527aa451d3c8c7e69ac83f8d082a2.setContent(html_731cc93369ed6227e134258c8be17cbd);
+        
+
+        circle_marker_ea53a99f2a5632ca6621e93b9be87a46.bindPopup(popup_5dc527aa451d3c8c7e69ac83f8d082a2)
+        ;
+
+        
+    
+    
+            var circle_marker_25ad6920d0c2d9adbedde6e7ea764af5 = L.circleMarker(
+                [-19.4703, -42.5476],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(map_5cf462c87caabcd389e5f9502f42e769);
+        
+    
+        var popup_0d392764f16c5d7553b011677438634b = L.popup({"maxWidth": "100%"});
+
+        
+            var html_a1cc50fd8123e728a580ccf96500d254 = $(`<div id="html_a1cc50fd8123e728a580ccf96500d254" style="width: 100.0%; height: 100.0%;">Parlamentar:  Guilherme da Cunha, Valor Total Liquidado: R$43000.0, Categoria: Equipamento de Telefonia, Unidade Beneficiária: IML de Ipatinga</div>`)[0];
+            popup_0d392764f16c5d7553b011677438634b.setContent(html_a1cc50fd8123e728a580ccf96500d254);
+        
+
+        circle_marker_25ad6920d0c2d9adbedde6e7ea764af5.bindPopup(popup_0d392764f16c5d7553b011677438634b)
+        ;
+
+        
+    
+    
+            var circle_marker_cc68d958e8d4b47658d39b37fd450b4c = L.circleMarker(
+                [-19.4703, -42.5476],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(map_5cf462c87caabcd389e5f9502f42e769);
+        
+    
+        var popup_8469bbc9556089ada6d15810330a1b58 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_75076ff217d44f87d8ec3c186c6df0ce = $(`<div id="html_75076ff217d44f87d8ec3c186c6df0ce" style="width: 100.0%; height: 100.0%;">Parlamentar:  Guilherme da Cunha, Valor Total Liquidado: R$4301038.0, Categoria: Equipamentos, Unidade Beneficiária: IML de Ipatinga</div>`)[0];
+            popup_8469bbc9556089ada6d15810330a1b58.setContent(html_75076ff217d44f87d8ec3c186c6df0ce);
+        
+
+        circle_marker_cc68d958e8d4b47658d39b37fd450b4c.bindPopup(popup_8469bbc9556089ada6d15810330a1b58)
+        ;
+
+        
+    
+    
+            var circle_marker_92933873d1efa141048a183e4708af2c = L.circleMarker(
+                [-19.4703, -42.5476],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(map_5cf462c87caabcd389e5f9502f42e769);
+        
+    
+        var popup_31081178ca971c2c07472a3dac4e2e8e = L.popup({"maxWidth": "100%"});
+
+        
+            var html_47e9fae0ad4a9f7410e88159e8ae68a0 = $(`<div id="html_47e9fae0ad4a9f7410e88159e8ae68a0" style="width: 100.0%; height: 100.0%;">Parlamentar:  Guilherme da Cunha, Valor Total Liquidado: R$3619453.0, Categoria: Mobiliário geral, Unidade Beneficiária: IML de Ipatinga</div>`)[0];
+            popup_31081178ca971c2c07472a3dac4e2e8e.setContent(html_47e9fae0ad4a9f7410e88159e8ae68a0);
+        
+
+        circle_marker_92933873d1efa141048a183e4708af2c.bindPopup(popup_31081178ca971c2c07472a3dac4e2e8e)
+        ;
+
+        
+    
+    
+            var circle_marker_617d814bbb2854e96dce5b27572496f2 = L.circleMarker(
+                [-16.7282, -43.8578],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(map_5cf462c87caabcd389e5f9502f42e769);
+        
+    
+        var popup_abbe1f52c867d786c0dbe8a59a99ee5b = L.popup({"maxWidth": "100%"});
+
+        
+            var html_513d502ec4c8041a58b01451dcc23cd9 = $(`<div id="html_513d502ec4c8041a58b01451dcc23cd9" style="width: 100.0%; height: 100.0%;">Parlamentar:  Guilherme da Cunha, Valor Total Liquidado: R$782500.0, Categoria: Equipamento de Informática, Unidade Beneficiária: Agência de Inteligência do 11º Departamento de Polícia Civil de Montes Claros</div>`)[0];
+            popup_abbe1f52c867d786c0dbe8a59a99ee5b.setContent(html_513d502ec4c8041a58b01451dcc23cd9);
+        
+
+        circle_marker_617d814bbb2854e96dce5b27572496f2.bindPopup(popup_abbe1f52c867d786c0dbe8a59a99ee5b)
+        ;
+
+        
+    
+    
+            var circle_marker_99aa89fbbe5b555d941a60f1f3ee6a0b = L.circleMarker(
+                [-16.7282, -43.8578],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(map_5cf462c87caabcd389e5f9502f42e769);
+        
+    
+        var popup_d78ccab0c66ea0e083f04ecd87e6cd39 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_2c5999b15e87d04da17b8b0f62430110 = $(`<div id="html_2c5999b15e87d04da17b8b0f62430110" style="width: 100.0%; height: 100.0%;">Parlamentar:  Guilherme da Cunha, Valor Total Liquidado: R$2229253.0, Categoria: Mobiliário geral, Unidade Beneficiária: Agência de Inteligência do 11º Departamento de Polícia Civil de Montes Claros</div>`)[0];
+            popup_d78ccab0c66ea0e083f04ecd87e6cd39.setContent(html_2c5999b15e87d04da17b8b0f62430110);
+        
+
+        circle_marker_99aa89fbbe5b555d941a60f1f3ee6a0b.bindPopup(popup_d78ccab0c66ea0e083f04ecd87e6cd39)
+        ;
+
+        
+    
+</script>
+</html>
